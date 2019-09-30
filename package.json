@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage":"http://mustkeom.github.io/data-table-with-pagination",
   "dependencies": {
     "axios": "^0.19.0",
     "query-string": "^6.8.3",
