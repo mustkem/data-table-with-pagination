@@ -26,6 +26,7 @@ class TableView extends Component {
                 age: false
             },
             sortBy: 'default',
+            search: ''
         }
     }
 
@@ -43,7 +44,18 @@ class TableView extends Component {
         let userList = [...this.props.userList];
         const filteredUserList = userList.slice(start, end);
         const sortedArray = this.onSort(filteredUserList, sortBy, sortAsy);
-        return sortedArray;
+        const filteredArray = this.onfilter(sortedArray);
+        return filteredArray;
+    }
+
+    onfilter = (arr) => {
+        return arr.filter(item => {
+            let ret = false;
+            if (item.first_name.includes(this.state.search)) {
+                ret = true;
+            }
+            return ret;
+        });
     }
 
     onSort = (arr, sortBy, sortAsy) => {
@@ -87,10 +99,28 @@ class TableView extends Component {
         })
     }
 
+    onChange = (e, key) => {
+        this.setState({
+            [key]: e.target.value
+        })
+    }
+
     render() {
         return (
             <div className="container">
                 <div className="table-view">
+                    <div className="search">
+                        <input
+                            placeholder="Search by First Name"
+                            value={this.state.search}
+                            onChange={(e) => { this.onChange(e, "search") }}
+                        />
+                        <span>
+                            {
+                                (perPage * (this.props.page - 1)) + ' - ' + (perPage * (this.props.page - 1) + perPage) + ' of ' + this.props.userList.length
+                            }
+                        </span>
+                    </div>
                     <ul className="table">
                         <li className="list-item head clearfix">
                             <div onClick={(e) => { this.onClickSort('first_name') }} className="data-item first-name">

@@ -158,3 +158,10 @@ button.disable{
   color:rgb(84, 84, 84);
   background: #dddddd;
 }
+
+.search{
+  margin-bottom: 30px;
+}
+.search input{
+  margin-right: 20px;
+}
