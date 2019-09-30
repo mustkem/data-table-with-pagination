@@ -89,7 +89,9 @@ li .data-item{
 
 .table .list-item.head .data-item{
   font-weight: 600;
-  background: #b9b9b9
+  background: #b9b9b9;
+  cursor: pointer;
+  user-select: none;;
  }
 
  .clearfix:after {
@@ -106,6 +108,14 @@ li .data-item{
 
 .table .list-item .data-item:last-child {
   border-right: 1px solid #7ecbe8c7;
+}
+.table i{
+  display: inline-block;
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+.table i.active{
+  transform: rotate(0deg);
 }
 /* agination button .item {
   
@@ -147,5 +157,4 @@ li .data-item{
 button.disable{
   color:rgb(84, 84, 84);
   background: #dddddd;
-  
 }

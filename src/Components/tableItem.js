@@ -15,7 +15,7 @@ class tableItem extends Component {
                 </div>
                 <div className="data-item last-name">
                     {
-                        this.props.item.first_name
+                        this.props.item.last_name
                     }
                 </div>
                 <div className="data-item company-name">

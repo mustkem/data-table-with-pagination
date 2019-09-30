@@ -22,7 +22,7 @@ function App() {
           <div className="content">
             <Switch>
               <Route path="/" exact component={TableView} />
-              <Route path="/user/1" component={() => (<div>user</div>)} />
+              <Route path="/user/:id" component={() => (<div>user</div>)} />
             </Switch>
 
           </div>
