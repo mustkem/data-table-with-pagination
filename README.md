@@ -14,6 +14,8 @@ Some Notes
 5% is remaining in pagination
 2% is css and filter
 
+It looks like user detail API is not working. I was hitting it like users/I'd but seems like something is missing.
+I have created route for user detail page though.  
 So Over all 90% is completed and 10% is remaining
 If you want it done completly. plese allow me some more time. Thank you.
 
