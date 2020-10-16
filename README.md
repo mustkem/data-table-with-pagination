@@ -1,25 +1,5 @@
 
-********************************************************************************************************************
-## Mustkeem Khan ## How to use and start this project
-
-This project is made by react js. 
- Pull it in local directory.
- run npm install
- run npm start
- project should run on localhost:3000
-
-Some Notes
-@ This project needs some improvement. This is not final version. I have done 90% of the tasks. 
-3% is remaining in user detail page
-5% is remaining in pagination
-2% is css and filter
-
-It looks like user detail API is not working. I was hitting it like users/I'd but seems like something is missing.
-I have created route for user detail page though.  
-So Over all 90% is completed and 10% is remaining
-If you want it done completly. plese allow me some more time. Thank you.
-
-********************************************************************************************************************
+******************************************************************************************************************
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
