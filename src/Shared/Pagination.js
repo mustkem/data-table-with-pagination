@@ -1,128 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { recordsPerPagePagination as perPage, numberOfPaginationButtons } from "../appConfig";
-import { path } from 'ramda';
-import { withRouter } from 'react-router-dom';
-import { parse, stringify } from 'query-string';
-import { paginationFunc } from "../AppStore/actions";
+import React from "react";
 
+const Pagination = (props) => {
+  const { page, handleChange, totalItems, itemsPerPage, showTotal } = props;
 
-class Pagination extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
+  const totalPages = Math.trunc(totalItems / itemsPerPage);
 
-    pageClick = (pageNumber, current) => {
-        if (!current) {
-            const query = parse(this.props.location.search);
-            query.page = pageNumber;
-            this.props.history.push('/?' + stringify(query))
-            this.props.paginationFunc(query);
-            // window.scrollTo(0, 0);
-        }
-    }
+  return (
+    <div className="pagination">
+      <span>
+        <span> {(page - 1) * itemsPerPage + 1}</span> -
+        <span> {page * itemsPerPage}</span> of
+        <span> {totalItems}</span>
+      </span>
+      <ul>
+        <li>
+          <button onClick={() => handleChange(1)}>{`<<`}</button>
+        </li>
+        <li>
+          <button onClick={() => handleChange("index")}>{"<"}</button>
+        </li>
+        {[...Array(totalPages).keys()].map((pageItem, index) => {
+          return (
+            <li key={index + pageItem}>
+              <button
+                className={`${page === index + 1 ? "active" : ""} `}
+                onClick={() => handleChange(index+1)}
+              >
+                {index + 1}
+              </button>
+            </li>
+          );
+        })}
+        <li>
+          <button onClick={() => handleChange("index")}>{">"}</button>
+        </li>
+        <li>
+          <button onClick={() => handleChange(totalPages)}>{`>>`}</button>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
-    render() {
-
-        const currentPage = parseInt(this.props.page);
-        const totalRecords = this.props.userList.length;
-        const totalPages = totalRecords / perPage;
-        const totalButtons = this.props.page + numberOfPaginationButtons - 1;
-        const nextRemainingPagesToShow = totalPages - currentPage;
-        const beforeRemainingPagesToShow = currentPage - 1;
-        // console.log(nextRemainingPagesToShow);
-
-        let start = this.props.page;
-        let end;
-        const tempArr = [];
-        const halfOfTotalButtons = parseInt(numberOfPaginationButtons / 2);
-
-        // console.log(halfOfTotalButtons)
-
-        if (currentPage <= halfOfTotalButtons) {
-            start = 1;
-            end = numberOfPaginationButtons
-        }
-
-        if (currentPage > halfOfTotalButtons) {
-            start = currentPage - halfOfTotalButtons;
-            end = currentPage + (halfOfTotalButtons > nextRemainingPagesToShow ? nextRemainingPagesToShow : halfOfTotalButtons);
-        }
-
-
-        for (let i = start; i <= end; i++) {
-            tempArr.push(<li key={i} >
-                <button onClick={() => this.pageClick(i, currentPage === i)} className={(currentPage === i) ? "active" : ""}>{i}</button>
-            </li>);
-        }
-
-
-        return (
-            <div className="pagination">
-                <div className="prev-next">
-                   
-                   
-                </div>
-                <ul>
-                    <li>
-                        <button
-                            disabled={`${this.props.page <= halfOfTotalButtons ? "disabled" : ""}`}
-                            className={`button ${this.props.page <= halfOfTotalButtons ? "disable" : ""}`}
-                            onClick={() => this.pageClick(this.props.page - halfOfTotalButtons, false)}>
-                            {
-                                `<<`
-                            }
-                        </button>
-
-                    </li>
-                    <li>
-                    <button
-                        disabled={`${this.props.page <= 1 ? "disabled" : ""}`}
-                        className={`button ${this.props.page <= 1 ? "disable" : ""}`}
-                        onClick={() => this.pageClick(this.props.page - 1, false)}>
-                        {"<"}
-                    </button>
-                    </li>
-                    {
-                        tempArr
-                    }
-                    <li>
-                    <button
-                        disabled={`${this.props.page >= totalPages ? "disabled" : ""}`}
-                        className={`button ${this.props.page >= totalPages ? "disable" : ""}`}
-                        onClick={() => this.pageClick(this.props.page + 1, false)}>
-                        {">"}
-                </button>
-                    </li>
-                    <li>
-                        <button
-                            disabled={`${this.props.page > nextRemainingPagesToShow + 2 ? "disabled" : ""}`}
-                            className={`button ${this.props.page > nextRemainingPagesToShow + 2 ? "disable" : ""}`}
-                            onClick={() => this.pageClick(this.props.page + halfOfTotalButtons, false)}>
-                            {
-                                `>>`
-                            }
-                        </button>
-                    </li>
-                </ul>
-
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        userList: path(["tableListReducer", "userList"], state) ? path(["tableListReducer", "userList"], state) : [],
-        page: parseInt(path(["tableListReducer", "page"], state))
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        paginationFunc: (query) => dispatch(paginationFunc(query)),
-    }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Pagination));
+export default Pagination;

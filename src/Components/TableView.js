@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { path } from "ramda";
+import { useLocation } from "react-router-dom";
 import { parse } from "query-string";
 import Table from "react-bootstrap/Table";
 
-import { getList, paginationFunc } from "../AppStore/actions";
+import { getList } from "../AppStore/actions";
 import TableItem from "./tableItem";
 import { recordsPerPagePagination as perPage } from "../appConfig";
 import Pagination from "../Shared/Pagination";
-import styles from './table.module.css';
-
+import styles from "./table.module.css";
 
 const tableHeader = {
   id: "User ID",
@@ -22,156 +21,85 @@ const tableHeader = {
   company: "Company",
 };
 
-class TableView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sort: {
-        default: false,
-        first_name: false,
-        last_name: false,
-        company_name: false,
-        city: false,
-        state: false,
-        zip: false,
-        email: false,
-        web: false,
-        age: false,
-      },
-      sortBy: "default",
-      search: "",
-    };
-  }
+const TableView = (props) => {
+  const { getList, userList, page } = props;
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [items, setItems] = useState([]);
+  const itemsPerPage = 5;
 
-  componentDidMount() {
-    this.props.getList();
-    const query = parse(this.props.location.search);
-    this.props.paginationFunc(query);
-  }
+  useEffect(() => {
+    getList();
+    const query = parse(location.search);
+  }, [getList]);
 
-  getUsers = () => {
-    const sortBy = this.state.sortBy;
-    const sortAsy = this.state.sort[sortBy];
-    const start = perPage * (this.props.page - 1);
-    const end = start + perPage;
-    let userList = [...this.props.userList];
-    const filteredUserList = userList.slice(start, end);
-    const sortedArray = this.onSort(filteredUserList, sortBy, sortAsy);
-    // const filteredArray = this.onfilter(sortedArray);c
-    const filteredArray = sortedArray;
+  useEffect(() => {
+    const updatedUserList = [...userList];
+    setItems([...updatedUserList.splice(0, itemsPerPage)]);
+  }, [userList]);
 
-    return filteredArray;
-  };
-
-  onfilter = (arr) => {
-    return arr.filter((item) => {
-      let ret = false;
-      if (item.first_name.includes(this.state.search)) {
-        ret = true;
-      }
-      return ret;
-    });
-  };
-
-  onSort = (arr, sortBy, sortAsy) => {
-    let b_greater_a = -1;
-    let a_greater_b = 1;
-    if (!sortAsy) {
-      b_greater_a = 1;
-      a_greater_b = -1;
-    }
-
-    function compare(a, b) {
-      if (a[sortBy] < b[sortBy]) {
-        return b_greater_a;
-      }
-      if (a[sortBy] > b[sortBy]) {
-        return a_greater_b;
-      }
-      return 0;
-    }
-
-    arr.sort(compare);
-    return arr;
-  };
-
-  onClickSort = (key) => {
-    let updatedSort = {};
-    let sort = { ...this.state.sort };
-    Object.keys(sort).forEach((ky) => {
-      let item = sort[key];
-      if (key == ky) {
-        item = !item;
-      } else {
-        item = false;
-      }
-      updatedSort[ky] = item;
-    });
-    this.setState({
-      sort: updatedSort,
-      sortBy: key,
-    });
-  };
-
-  onChange = (e, key) => {
-    this.setState({
-      [key]: e.target.value,
-    });
-  };
-
-  render() {
-    return (
-      <div className={styles.container}>
-        <div className="table-view">
-          <div className="search">
-            <input
-              placeholder="Search by First Name"
-              value={this.state.search}
-              onChange={(e) => {
-                this.onChange(e, "search");
-              }}
-            />
-            <span>
-              {perPage * (this.props.page - 1) +
-                " - " +
-                (perPage * (this.props.page - 1) + perPage) +
-                " of " +
-                this.props.userList.length}
-            </span>
-          </div>
-          <Table>
-            <thead>
-              <tr>
-                {Object.keys(tableHeader).map((key) => {
-                  return <th>{tableHeader[key]}</th>;
-                })}
-              </tr>
-            </thead>
-
-            <tbody>
-              {this.getUsers().map((item, index) => (
-                <TableItem key={item.id} item={item} index={index} />
-              ))}
-            </tbody>
-          </Table>
-          <Pagination />
-        </div>
-      </div>
+  const handleChangePage = (pageNumber) => {
+    setItems(
+      userList.splice(
+        (pageNumber - 1) * itemsPerPage + 1,
+        pageNumber * itemsPerPage
+      )
     );
-  }
-}
+
+    // const query = parse(this.props.location.search);
+    // query.page = pageNumber;
+    // this.props.history.push('/?' + stringify(query))
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className="table-view">
+        <div className="search">
+          <input
+            placeholder="Search by First Name"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
+          />
+          
+        </div>
+        <Table>
+          <thead>
+            <tr>
+              {Object.keys(tableHeader).map((key) => {
+                return <th>{tableHeader[key]}</th>;
+              })}
+            </tr>
+          </thead>
+
+          <tbody>
+            {items.map((item, index) => (
+              <TableItem key={item.id} item={item} index={index} />
+            ))}
+          </tbody>
+        </Table>
+        <Pagination
+          page={page}
+          totalItems={userList.length}
+          itemsPerPage={itemsPerPage}
+          showTotal
+          handleChange={handleChangePage}
+        />
+      </div>
+    </div>
+  );
+};
+
 const mapStateToProps = (state) => {
   return {
-    userList: path(["tableListReducer", "userList"], state)
-      ? path(["tableListReducer", "userList"], state)
-      : [],
-    page: path(["tableListReducer", "page"], state),
+    userList: state.tableListReducer.userList || [],
+    page: state.tableListReducer.page,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getList: () => dispatch(getList()),
-    paginationFunc: (query) => dispatch(paginationFunc(query)),
   };
 };
 
