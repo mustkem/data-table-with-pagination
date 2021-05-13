@@ -62,18 +62,8 @@ class Pagination extends Component {
         return (
             <div className="pagination">
                 <div className="prev-next">
-                    <button
-                        disabled={`${this.props.page <= 1 ? "disabled" : ""}`}
-                        className={`button ${this.props.page <= 1 ? "disable" : ""}`}
-                        onClick={() => this.pageClick(this.props.page - 1, false)}>
-                        Previous
-                    </button>
-                    <button
-                        disabled={`${this.props.page >= totalPages ? "disabled" : ""}`}
-                        className={`button ${this.props.page >= totalPages ? "disable" : ""}`}
-                        onClick={() => this.pageClick(this.props.page + 1, false)}>
-                        Next
-                </button>
+                   
+                   
                 </div>
                 <ul>
                     <li>
@@ -87,9 +77,25 @@ class Pagination extends Component {
                         </button>
 
                     </li>
+                    <li>
+                    <button
+                        disabled={`${this.props.page <= 1 ? "disabled" : ""}`}
+                        className={`button ${this.props.page <= 1 ? "disable" : ""}`}
+                        onClick={() => this.pageClick(this.props.page - 1, false)}>
+                        {"<"}
+                    </button>
+                    </li>
                     {
                         tempArr
                     }
+                    <li>
+                    <button
+                        disabled={`${this.props.page >= totalPages ? "disabled" : ""}`}
+                        className={`button ${this.props.page >= totalPages ? "disable" : ""}`}
+                        onClick={() => this.pageClick(this.props.page + 1, false)}>
+                        {">"}
+                </button>
+                    </li>
                     <li>
                         <button
                             disabled={`${this.props.page > nextRemainingPagesToShow + 2 ? "disabled" : ""}`}

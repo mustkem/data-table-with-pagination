@@ -132,15 +132,15 @@ li .data-item{
 .pagination button{
  
   cursor: pointer;
-  padding:10px;
+  padding:7px;
   background-color: #f7f7f7;
   border: none;
   color: #4373fd;
-  padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 12px;
+  line-height: 12px;
   border: 1px solid#dedede
 }
 .pagination ul button{

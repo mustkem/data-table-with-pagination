@@ -1,16 +1,24 @@
-import { actionTypes } from './actionTypes';
 import axios from 'axios';
+import { userList } from '../models/mock-data'
+import { actionTypes } from './actionTypes';
+
+
 
 export function getList() {
     return (dispatch, getState) => {
-        axios.get('https://demo9197058.mockable.io/users')
-            .then(function (response) {
-                dispatch(setList(response.data));
+        return new Promise((res)=>{
+            setTimeout(() => {
+                dispatch(setList(userList));
+            }, 1000);
+        })
+        // axios.get('https://jsonplaceholder.typicode.com/users')
+        //     .then(function (response) {
+        //         dispatch(setList(response.data));
 
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     })
     };
 }
 
