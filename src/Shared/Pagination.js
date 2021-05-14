@@ -19,7 +19,7 @@ const Pagination = (props) => {
           <button onClick={() => handleChange(1)}>{`<<`}</button>
         </li>
         <li>
-          <button onClick={() => handleChange("index")}>{"<"}</button>
+          <button disabled={page<=1?"disabled":""} onClick={() => handleChange(page-1)}>{"<"}</button>
         </li>
         {[...Array(totalPages).keys()].map((pageItem, index) => {
           return (
@@ -34,7 +34,7 @@ const Pagination = (props) => {
           );
         })}
         <li>
-          <button onClick={() => handleChange("index")}>{">"}</button>
+          <button disabled={page>=totalPages?"disabled":""} onClick={() => handleChange(page+1)}>{">"}</button>
         </li>
         <li>
           <button onClick={() => handleChange(totalPages)}>{`>>`}</button>

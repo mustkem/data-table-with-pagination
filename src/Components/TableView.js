@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { parse } from "query-string";
 import Table from "react-bootstrap/Table";
 
 import { getList } from "../AppStore/actions";
 import TableItem from "./tableItem";
-import { recordsPerPagePagination as perPage } from "../appConfig";
 import Pagination from "../Shared/Pagination";
 import styles from "./table.module.css";
 
@@ -23,7 +20,6 @@ const tableHeader = {
 
 const TableView = (props) => {
   const { getList, userList } = props;
-  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
