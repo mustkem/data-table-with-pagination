@@ -19,9 +19,8 @@ const tableHeader = {
 };
 
 /*
--Search - in progress
--Sort - 
-
+-Search - completed
+-Sort - in progress
 */
 
 const TableView = (props) => {
@@ -29,6 +28,7 @@ const TableView = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
+  const [sortKey, setSortKey] = useState("");
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -78,6 +78,16 @@ const TableView = (props) => {
     setItems(filteredItems);
   };
 
+  const handleSort = (key) => {
+    const updatedItems = [...items];
+    updatedItems.sort(function (a, b) {
+      return a[key] > b[key] ? 1 : -1;
+    });
+    setItems(updatedItems);
+    setSortKey(key === sortKey ? "" : key);
+  };
+
+  console.table(sortKey);
   return (
     <div className={styles.container}>
       <div className="table-view">
@@ -92,7 +102,22 @@ const TableView = (props) => {
           <thead>
             <tr>
               {Object.keys(tableHeader).map((key) => {
-                return <th>{tableHeader[key]}</th>;
+                return (
+                  <th
+                    onClick={() => {
+                      handleSort(key);
+                    }}
+                  >
+                    <span>{tableHeader[key]}</span>
+                    <span
+                      className={`${
+                        sortKey === key ? styles.sortIconActive : ""
+                      } ${styles.sortIcon}`}
+                    >
+                      {">"}
+                    </span>
+                  </th>
+                );
               })}
             </tr>
           </thead>

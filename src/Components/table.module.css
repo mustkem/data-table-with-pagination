@@ -2,3 +2,14 @@
     width:80vw;
     margin:0 auto;
 }
+
+.sortIcon{
+    padding:3px;
+    transform: rotate(90deg);
+    display: inline-block;
+}
+
+.sortIconActive{
+    transform: rotate(270deg);
+}
+

@@ -5,10 +5,6 @@ const Pagination = (props) => {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  console.log("testtt", )
-
-  console.log({ page, totalItems, itemsPerPage });
-
   return (
     <div className="pagination">
       <span>
