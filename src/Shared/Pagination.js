@@ -5,7 +5,7 @@ const Pagination = (props) => {
 
   const totalPages = Math.trunc(totalItems / itemsPerPage);
 
-  console.log( { page, handleChange, totalItems, itemsPerPage, showTotal } )
+  console.log({ page, handleChange, totalItems, itemsPerPage, showTotal });
 
   return (
     <div className="pagination">
@@ -19,14 +19,19 @@ const Pagination = (props) => {
           <button onClick={() => handleChange(1)}>{`<<`}</button>
         </li>
         <li>
-          <button disabled={page<=1?"disabled":""} onClick={() => handleChange(page-1)}>{"<"}</button>
+          <button
+            disabled={page <= 1 ? "disabled" : ""}
+            onClick={() => handleChange(page - 1)}
+          >
+            {"<"}
+          </button>
         </li>
         {[...Array(totalPages).keys()].map((pageItem, index) => {
           return (
             <li key={index + pageItem}>
               <button
                 className={`${page === index + 1 ? "active" : ""} `}
-                onClick={() => handleChange(index+1)}
+                onClick={() => handleChange(index + 1)}
               >
                 {index + 1}
               </button>
@@ -34,7 +39,12 @@ const Pagination = (props) => {
           );
         })}
         <li>
-          <button disabled={page>=totalPages?"disabled":""} onClick={() => handleChange(page+1)}>{">"}</button>
+          <button
+            disabled={page >= totalPages ? "disabled" : ""}
+            onClick={() => handleChange(page + 1)}
+          >
+            {">"}
+          </button>
         </li>
         <li>
           <button onClick={() => handleChange(totalPages)}>{`>>`}</button>

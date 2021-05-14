@@ -35,7 +35,7 @@ const TableView = (props) => {
   }, [userList]);
 
   const handleChangePage = (pageNumber) => {
-    const updatedItems = [...userList] 
+    const updatedItems = [...userList];
     setItems(
       updatedItems.splice(
         (pageNumber - 1) * itemsPerPage + 1,
@@ -44,7 +44,6 @@ const TableView = (props) => {
     );
 
     setPage(pageNumber);
-   
   };
 
   return (
