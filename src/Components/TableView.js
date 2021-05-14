@@ -93,7 +93,7 @@ const TableView = (props) => {
       <div className="table-view">
         <div className="search">
           <input
-            placeholder="Search by First Name"
+            placeholder="Search Name"
             value={searchQuery}
             onChange={handleSearch}
           />
