@@ -80,20 +80,32 @@ const TableView = (props) => {
 
   const handleSort = (key) => {
     const updatedItems = [...items];
-    updatedItems.sort(function (a, b) {
-      return a[key] > b[key] ? 1 : -1;
-    });
-    setItems(updatedItems);
+
+    if (key !== sortKey) {
+      setItems(ascSort(updatedItems)(key));
+    } else {
+      setItems(descSort(updatedItems)(key));
+    }
+
     setSortKey(key === sortKey ? "" : key);
   };
 
-  console.table(sortKey);
+  const ascSort = (list) => (key) =>
+    list.sort(function (a, b) {
+      return a[key] > b[key] ? 1 : -1;
+    });
+
+  const descSort = (list) => (key) =>
+    list.sort(function (a, b) {
+      return a[key] > b[key] ? -1 : 1;
+    });
+
   return (
     <div className={styles.container}>
       <div className="table-view">
         <div className="search">
           <input
-            placeholder="Search Name"
+            placeholder="Search by Name"
             value={searchQuery}
             onChange={handleSearch}
           />
