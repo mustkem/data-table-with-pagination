@@ -22,15 +22,15 @@ const tableHeader = {
 };
 
 const TableView = (props) => {
-  const { getList, userList, page } = props;
+  const { getList, userList } = props;
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
   const itemsPerPage = 5;
 
   useEffect(() => {
     getList();
-    const query = parse(location.search);
   }, [getList]);
 
   useEffect(() => {
@@ -39,16 +39,16 @@ const TableView = (props) => {
   }, [userList]);
 
   const handleChangePage = (pageNumber) => {
+    const updatedItems = [...userList] 
     setItems(
-      userList.splice(
+      updatedItems.splice(
         (pageNumber - 1) * itemsPerPage + 1,
         pageNumber * itemsPerPage
       )
     );
 
-    // const query = parse(this.props.location.search);
-    // query.page = pageNumber;
-    // this.props.history.push('/?' + stringify(query))
+    setPage(pageNumber);
+   
   };
 
   return (
@@ -62,7 +62,6 @@ const TableView = (props) => {
               setSearchQuery(e.target.value);
             }}
           />
-          
         </div>
         <Table>
           <thead>
@@ -72,7 +71,6 @@ const TableView = (props) => {
               })}
             </tr>
           </thead>
-
           <tbody>
             {items.map((item, index) => (
               <TableItem key={item.id} item={item} index={index} />
@@ -94,9 +92,9 @@ const TableView = (props) => {
 const mapStateToProps = (state) => {
   return {
     userList: state.tableListReducer.userList || [],
-    page: state.tableListReducer.page,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getList: () => dispatch(getList()),

@@ -5,6 +5,8 @@ const Pagination = (props) => {
 
   const totalPages = Math.trunc(totalItems / itemsPerPage);
 
+  console.log( { page, handleChange, totalItems, itemsPerPage, showTotal } )
+
   return (
     <div className="pagination">
       <span>
