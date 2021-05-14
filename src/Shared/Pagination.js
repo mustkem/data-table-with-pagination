@@ -1,11 +1,13 @@
 import React from "react";
 
 const Pagination = (props) => {
-  const { page, handleChange, totalItems, itemsPerPage, showTotal } = props;
+  const { page, handleChange, totalItems, itemsPerPage } = props;
 
-  const totalPages = Math.trunc(totalItems / itemsPerPage);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  console.log({ page, handleChange, totalItems, itemsPerPage, showTotal });
+  console.log("testtt", )
+
+  console.log({ page, totalItems, itemsPerPage });
 
   return (
     <div className="pagination">

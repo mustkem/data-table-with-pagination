@@ -18,6 +18,12 @@ const tableHeader = {
   company: "Company",
 };
 
+/*
+-Search - in progress
+-Sort - 
+
+*/
+
 const TableView = (props) => {
   const { getList, userList } = props;
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,19 +37,45 @@ const TableView = (props) => {
 
   useEffect(() => {
     const updatedUserList = [...userList];
-    setItems([...updatedUserList.splice(0, itemsPerPage)]);
+    setItems(updatedUserList.slice(0, itemsPerPage));
   }, [userList]);
 
   const handleChangePage = (pageNumber) => {
     const updatedItems = [...userList];
+
     setItems(
-      updatedItems.splice(
-        (pageNumber - 1) * itemsPerPage + 1,
+      updatedItems.slice(
+        (pageNumber - 1) * itemsPerPage,
         pageNumber * itemsPerPage
       )
     );
 
     setPage(pageNumber);
+    setSearchQuery("");
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+
+    const updatedItems = [...userList];
+
+    const filteredItems = [];
+
+    const currestSetOfItems = updatedItems.slice(
+      (page - 1) * itemsPerPage,
+      page * itemsPerPage
+    );
+
+    currestSetOfItems.forEach((dataItem) => {
+      if (
+        dataItem.name &&
+        dataItem.name.toLowerCase().includes(e.target.value.toLowerCase())
+      ) {
+        filteredItems.push(dataItem);
+      }
+    });
+
+    setItems(filteredItems);
   };
 
   return (
@@ -53,9 +85,7 @@ const TableView = (props) => {
           <input
             placeholder="Search by First Name"
             value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-            }}
+            onChange={handleSearch}
           />
         </div>
         <Table>
@@ -76,7 +106,6 @@ const TableView = (props) => {
           page={page}
           totalItems={userList.length}
           itemsPerPage={itemsPerPage}
-          showTotal
           handleChange={handleChangePage}
         />
       </div>
