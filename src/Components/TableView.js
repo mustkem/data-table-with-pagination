@@ -18,11 +18,6 @@ const tableHeader = {
   company: "Company",
 };
 
-/*
--Search - completed
--Sort - in progress
-*/
-
 const TableView = (props) => {
   const { getList, userList } = props;
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,9 +31,16 @@ const TableView = (props) => {
   }, [getList]);
 
   useEffect(() => {
+    setInitialTableState();
+  }, [userList]);
+
+  const setInitialTableState = () => {
+    setSearchQuery("");
+    setPage(1);
+    setSortKey("");
     const updatedUserList = [...userList];
     setItems(updatedUserList.slice(0, itemsPerPage));
-  }, [userList]);
+  };
 
   const handleChangePage = (pageNumber) => {
     const updatedItems = [...userList];
@@ -103,12 +105,13 @@ const TableView = (props) => {
   return (
     <div className={styles.container}>
       <div className="table-view">
-        <div className="search">
+        <div className={styles.headerContainer}>
           <input
             placeholder="Search by Name"
             value={searchQuery}
             onChange={handleSearch}
           />
+          <button onClick={setInitialTableState}>Reset</button>
         </div>
         <Table>
           <thead>
