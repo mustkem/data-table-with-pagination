@@ -119,6 +119,12 @@ const TableView = (props) => {
                     onClick={() => {
                       handleSort(key);
                     }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "lightgray";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "white";
+                    }}
                   >
                     <span>{tableHeader[key]}</span>
                     <span
