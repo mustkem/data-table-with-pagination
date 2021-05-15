@@ -1,6 +1,8 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
-const Pagination = (props) => {
+import { PaginationProps } from '../Components/models'
+
+const Pagination: FunctionComponent<PaginationProps> = (props) => {
   const { page, handleChange, totalItems, itemsPerPage } = props;
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -18,13 +20,13 @@ const Pagination = (props) => {
         </li>
         <li>
           <button
-            disabled={page <= 1 ? "disabled" : ""}
+            disabled={page <= 1 ? true : false}
             onClick={() => handleChange(page - 1)}
           >
             {"<"}
           </button>
         </li>
-        {[...Array(totalPages).keys()].map((pageItem, index) => {
+        {[...Array.from(Array(totalPages).keys())].map((pageItem: any, index: number) => {
           return (
             <li key={index + pageItem}>
               <button
@@ -38,7 +40,7 @@ const Pagination = (props) => {
         })}
         <li>
           <button
-            disabled={page >= totalPages ? "disabled" : ""}
+            disabled={page >= totalPages ? true : false}
             onClick={() => handleChange(page + 1)}
           >
             {">"}

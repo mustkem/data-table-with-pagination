@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FunctionComponent } from "react";
 import { connect } from "react-redux";
-import styles from "./table.module.css";
 
 import TableComponent from "./Table";
 
 import { getList } from "../AppStore/actions";
 
-const tableHeader = {
+import { HomeProps, TableHeader } from './models'
+
+import styles from "./table.module.css";
+
+
+const tableHeader: TableHeader = {
   id: "User ID",
   name: "Name",
   email: "Email",
@@ -17,7 +21,8 @@ const tableHeader = {
   company: "Company",
 };
 
-const Home = (props) => {
+
+const Home: FunctionComponent<HomeProps> = (props) => {
   const { getList, userList } = props;
 
   useEffect(() => {
@@ -35,13 +40,13 @@ const Home = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   return {
     userList: state.tableListReducer.userList || [],
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     getList: () => dispatch(getList()),
   };

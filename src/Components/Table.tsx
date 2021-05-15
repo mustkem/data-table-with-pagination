@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FunctionComponent } from "react";
 import Table from "react-bootstrap/Table";
 
 import TableItem from "./tableItem";
 import Pagination from "../Shared/Pagination";
+
+import { TableProps } from './models';
+
 import styles from "./table.module.css";
 
-const TableView = (props) => {
+
+const TableView: FunctionComponent<TableProps> = (props) => {
   const { userList, tableHeader, itemsPerPage } = props;
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState("");
 
@@ -21,12 +25,12 @@ const TableView = (props) => {
     setSearchQuery("");
     setPage(1);
     setSortKey("");
-    const updatedUserList = [...userList];
+    const updatedUserList: Array<object> = [...userList];
     setItems(updatedUserList.slice(0, itemsPerPage));
   };
 
-  const handleChangePage = (pageNumber) => {
-    const updatedItems = [...userList];
+  const handleChangePage = (pageNumber: number) => {
+    const updatedItems: Array<object> = [...userList];
 
     setItems(
       updatedItems.slice(
@@ -39,12 +43,12 @@ const TableView = (props) => {
     setSearchQuery("");
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: any) => {
     setSearchQuery(e.target.value);
 
     const updatedItems = [...userList];
 
-    const filteredItems = [];
+    const filteredItems: Array<object> = [];
 
     const currestSetOfItems = updatedItems.slice(
       (page - 1) * itemsPerPage,
@@ -63,7 +67,7 @@ const TableView = (props) => {
     setItems(filteredItems);
   };
 
-  const handleSort = (key) => {
+  const handleSort = (key: string) => {
     const updatedItems = [...items];
 
     if (key !== sortKey) {
@@ -75,13 +79,13 @@ const TableView = (props) => {
     setSortKey(key === sortKey ? "" : key);
   };
 
-  const ascSort = (list) => (key) =>
-    list.sort(function (a, b) {
+  const ascSort = (list: any) => (key: any) =>
+    list.sort(function (a: any, b: any) {
       return a[key] > b[key] ? 1 : -1;
     });
 
-  const descSort = (list) => (key) =>
-    list.sort(function (a, b) {
+  const descSort = (list: any) => (key: any) =>
+    list.sort(function (a: any, b: any) {
       return a[key] > b[key] ? -1 : 1;
     });
 
@@ -99,7 +103,7 @@ const TableView = (props) => {
         <Table>
           <thead>
             <tr>
-              {Object.keys(tableHeader).map((key) => {
+              {Object.keys(tableHeader).map((key: any) => {
                 return (
                   <th
                     onClick={() => {
@@ -114,9 +118,8 @@ const TableView = (props) => {
                   >
                     <span>{tableHeader[key]}</span>
                     <span
-                      className={`${
-                        sortKey === key ? styles.sortIconActive : ""
-                      } ${styles.sortIcon}`}
+                      className={`${sortKey === key ? styles.sortIconActive : ""
+                        } ${styles.sortIcon}`}
                     >
                       {">"}
                     </span>
@@ -126,8 +129,8 @@ const TableView = (props) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <TableItem key={item.id} item={item} index={index} />
+            {items.map((item: any, index: number) => (
+              <TableItem key={item.id} item={item}  />
             ))}
           </tbody>
         </Table>
