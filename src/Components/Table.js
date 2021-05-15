@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import Table from "react-bootstrap/Table";
 
-import { getList } from "../AppStore/actions";
 import TableItem from "./tableItem";
 import Pagination from "../Shared/Pagination";
 import styles from "./table.module.css";
 
-const tableHeader = {
-  id: "User ID",
-  name: "Name",
-  email: "Email",
-  username: "Username",
-  website: "Website",
-  phone: "Phone",
-  city: "City",
-  company: "Company",
-};
-
 const TableView = (props) => {
-  const { getList, userList } = props;
+  const { userList, tableHeader, itemsPerPage } = props;
+
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState("");
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    getList();
-  }, [getList]);
 
   useEffect(() => {
     setInitialTableState();
@@ -103,16 +86,16 @@ const TableView = (props) => {
     });
 
   return (
-    <div className={styles.container}>
-      <div className="table-view">
-        <div className={styles.headerContainer}>
-          <input
-            placeholder="Search by Name"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <button onClick={setInitialTableState}>Reset</button>
-        </div>
+    <div className={styles.tableView}>
+      <div className={styles.headerContainer}>
+        <input
+          placeholder="Search by Name"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+        <button onClick={setInitialTableState}>Reset</button>
+      </div>
+      {items.length > 0 && (
         <Table>
           <thead>
             <tr>
@@ -148,27 +131,18 @@ const TableView = (props) => {
             ))}
           </tbody>
         </Table>
-        <Pagination
-          page={page}
-          totalItems={userList.length}
-          itemsPerPage={itemsPerPage}
-          handleChange={handleChangePage}
-        />
-      </div>
+      )}
+      {items.length === 0 && (
+        <div className={styles.noRecord}>No record Found</div>
+      )}
+      <Pagination
+        page={page}
+        totalItems={userList.length}
+        itemsPerPage={itemsPerPage}
+        handleChange={handleChangePage}
+      />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    userList: state.tableListReducer.userList || [],
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getList: () => dispatch(getList()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TableView);
+export default TableView;
