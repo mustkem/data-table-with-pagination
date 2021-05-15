@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://mustkem.github.io/data-table-with-pagination",
+  "homepage": ".",
   "dependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^15.3.0",
