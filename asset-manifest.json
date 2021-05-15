@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/data-table-with-pagination/static/css/main.b828b9b6.chunk.css",
-    "main.js": "/data-table-with-pagination/static/js/main.d758d728.chunk.js",
-    "main.js.map": "/data-table-with-pagination/static/js/main.d758d728.chunk.js.map",
+    "main.css": "/data-table-with-pagination/static/css/main.c36e93da.chunk.css",
+    "main.js": "/data-table-with-pagination/static/js/main.4762f735.chunk.js",
+    "main.js.map": "/data-table-with-pagination/static/js/main.4762f735.chunk.js.map",
     "runtime-main.js": "/data-table-with-pagination/static/js/runtime-main.35ef3c9e.js",
     "runtime-main.js.map": "/data-table-with-pagination/static/js/runtime-main.35ef3c9e.js.map",
-    "static/js/2.4dd4104c.chunk.js": "/data-table-with-pagination/static/js/2.4dd4104c.chunk.js",
-    "static/js/2.4dd4104c.chunk.js.map": "/data-table-with-pagination/static/js/2.4dd4104c.chunk.js.map",
+    "static/css/2.c724ebb2.chunk.css": "/data-table-with-pagination/static/css/2.c724ebb2.chunk.css",
+    "static/js/2.5f2e1e76.chunk.js": "/data-table-with-pagination/static/js/2.5f2e1e76.chunk.js",
+    "static/js/2.5f2e1e76.chunk.js.map": "/data-table-with-pagination/static/js/2.5f2e1e76.chunk.js.map",
     "index.html": "/data-table-with-pagination/index.html",
-    "precache-manifest.addc67d044ffd34a95669f5102e57d2f.js": "/data-table-with-pagination/precache-manifest.addc67d044ffd34a95669f5102e57d2f.js",
+    "precache-manifest.4f8bfcff5621cefb02a0ae893e492076.js": "/data-table-with-pagination/precache-manifest.4f8bfcff5621cefb02a0ae893e492076.js",
     "service-worker.js": "/data-table-with-pagination/service-worker.js",
-    "static/css/main.b828b9b6.chunk.css.map": "/data-table-with-pagination/static/css/main.b828b9b6.chunk.css.map",
+    "static/css/2.c724ebb2.chunk.css.map": "/data-table-with-pagination/static/css/2.c724ebb2.chunk.css.map",
+    "static/css/main.c36e93da.chunk.css.map": "/data-table-with-pagination/static/css/main.c36e93da.chunk.css.map",
     "static/media/logo.svg": "/data-table-with-pagination/static/media/logo.25bf045c.svg"
   }
 }
