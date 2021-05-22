@@ -116,13 +116,15 @@ const TableView: FunctionComponent<TableProps> = (props) => {
                       e.currentTarget.style.backgroundColor = "white";
                     }}
                   >
-                    <span>{tableHeader[key]}</span>
-                    <span
-                      className={`${sortKey === key ? styles.sortIconActive : ""
-                        } ${styles.sortIcon}`}
-                    >
-                      {">"}
-                    </span>
+                    <div className={styles.headerItem}>
+                      <span>{tableHeader[key]}</span>
+                      <span
+                        className={`${sortKey === key ? styles.sortIconActive : ""
+                          } ${styles.sortIcon}`}
+                      >
+                        {">"}
+                      </span>
+                    </div>
                   </th>
                 );
               })}
@@ -130,7 +132,7 @@ const TableView: FunctionComponent<TableProps> = (props) => {
           </thead>
           <tbody>
             {items.map((item: any, index: number) => (
-              <TableItem key={item.id} item={item}  />
+              <TableItem key={item.id} item={item} />
             ))}
           </tbody>
         </Table>
